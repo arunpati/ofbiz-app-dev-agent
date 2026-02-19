@@ -5,16 +5,36 @@ The `ofbiz-skills` plugin is a repository of standardized knowledge, best practi
 
 By providing these "skills" in a structured format, we ensure that agents follow the correct design patterns (e.g., favoring View Entities over manual iteration, using Worker classes correctly, adhering to security standards) without manual intervention for every step.
 
+## Agent Setup & Activation
+
+For an AI agent (like Antigravity) to effectively use these skills, they need to be accessible in specific locations.
+
+### 1. Framework Location (Plugin)
+Keep the source of these skills in your OFBiz plugins directory for version control:
+`/Users/arun/personal/arun/ofbiz_dev/ofbiz-framework/plugins/ofbiz-skills/`
+
+### 2. Native Agent Directory (Activation)
+For the agent to recognize these as **Core Skills** (allowing tools like `view_skill` to work), they must be placed in the agent's native directory:
+`~/.gemini/antigravity/skills/`
+
+### 🛠️ Recommended Setup: Symlinking
+To maintain the skills in your GitHub-tracked plugin while enabling them for the agent, use symbolic links:
+
+```bash
+# Example: Activate the manage-quartz-jobs skill
+ln -s /Users/arun/personal/arun/ofbiz_dev/ofbiz-framework/plugins/ofbiz-skills/manage-quartz-jobs ~/.gemini/antigravity/skills/manage-quartz-jobs
+```
+
 ## How to Use with an Agent
-AI agents can internalize these skills by reading the `SKILL.md` files located in each sub-component directory. 
+Once activated or shared, AI agents can internalize these skills by reading the `SKILL.md` files.
 
 ### Instructions for the Agent
-To utilize these skills, provide the following instruction in the agent's prompt or context:
-> "Whenever performing tasks related to OFBiz components (e.g., Screens, Entities, Services, Data), first read the relevant skill definitions located in `plugins/ofbiz-skills/[skill-directory]/SKILL.md`. Adhere to the triggers, procedures, and guardrails defined therein."
+If not natively activated, provide the following instruction:
+> "Whenever performing tasks related to OFBiz components, first read the relevant skill definitions located in `plugins/ofbiz-skills/[skill-directory]/SKILL.md`."
 
 ### Integration Patterns
 - **Triggered Reading**: Instruct the agent to "trigger" a skill read when it detects a specific file type extension (e.g., `.rest.xml` triggers `manage-api-integration`).
-- **Contextual Loading**: At the start of a feature development task, the agent should list the `ofbiz-skills` directory and select relevant knowledge bases to load.
+- **Contextual Loading**: At the start of a task, the agent should list the `ofbiz-skills` directory and load relevant knowledge.
 
 ## Directory Structure
 These skills should be placed within the `plugins` directory of your OFBiz framework:
