@@ -34,6 +34,7 @@ Define and maintain request mappings and view definitions within the OFBiz `cont
     - Define `<event type="..." path="..." invoke="..."/>` for processing logic.
     - **Architectural Decision: Which Event Type to Use?**
         - `type="service"`: **Preferred for 90% of requests**. Use this when the request maps directly to a standard OFBiz service (which handles transactions, permissions, and IN/OUT parameter mapping automatically).
+        - `type="service-multi"`: Use to handle multi-form submissions natively. It extracts tabular POST data (like multiple input rows), loops over them in the framework, and calls a standard single-record service repeatedly. No custom Java/Groovy iteration required.
         - `type="groovy"`: Use this for orchestrating multiple services, formatting/pre-processing HTTP Request parameters before calling a service, or writing custom endpoints (like streaming files or returning JSON).
         - `type="java"`: **Use sparingly for HTTP Controllers**. Only use this for core framework events (like login/logout, JWT validation, or low-level HTTP session manipulation). Standard business logic belongs in Services, not Java HTTP events.
 4. **Response Handling**:
